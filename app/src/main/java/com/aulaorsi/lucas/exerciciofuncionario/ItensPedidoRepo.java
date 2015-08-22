@@ -48,11 +48,13 @@ public class ItensPedidoRepo {
         db.close();
     }
 
-    public ArrayList<HashMap<String, String>> getItemPedidoList() {
+    public ArrayList<HashMap<String, String>> getItemPedidoList(int idpedido) {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase(); String selectQuery = "SELECT " +
                 Pedido.COLUNA_ID + "," + ItensPedido.COLUNA_IDPEDIDO + "," + ItensPedido.COLUNA_PRODUTO +
-                " FROM " + dbHelper.TABELA_ITENSPEDIDO;
+                //" FROM " + dbHelper.TABELA_ITENSPEDIDO;
+                " FROM " + dbHelper.TABELA_ITENSPEDIDO + " WHERE " + ItensPedido.COLUNA_IDPEDIDO + " = " + String.valueOf(idpedido);
+
         ArrayList<HashMap<String, String>> itenspedidoList = new ArrayList<HashMap<String, String>>();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -75,7 +77,7 @@ public class ItensPedidoRepo {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase(); String selectQuery = "SELECT " +
                 Pedido.COLUNA_ID + "," + ItensPedido.COLUNA_IDPEDIDO + "," + ItensPedido.COLUNA_PRODUTO +
-                " FROM " + dbHelper.TABELA_ITENSPEDIDO + " WHERE " + Pedido.COLUNA_ID + " = " + Id;
+                " FROM " + dbHelper.TABELA_ITENSPEDIDO + " WHERE " + ItensPedido.COLUNA_IDPEDIDO + " = " + Id;
 
         ArrayList<HashMap<String, String>> itenspedidoList = new ArrayList<HashMap<String, String>>();
         Cursor cursor = db.rawQuery(selectQuery, null);

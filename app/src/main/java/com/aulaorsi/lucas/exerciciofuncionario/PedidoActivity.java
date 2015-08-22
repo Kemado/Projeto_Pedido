@@ -121,7 +121,7 @@ public class PedidoActivity extends ListActivity implements android.view.View.On
                     }
                 });
                 ListAdapter adapter = new SimpleAdapter(PedidoActivity.this, pedidoList, R.layout.view_pedido_entry, new String[]{"id", "garcom", "mesa", "status"}, new int[]{R.id.pedido_Id, R.id.pedido_garcom, R.id.pedido_mesa, R.id.pedido_status});
-
+                setListAdapter(adapter);
 
                 //entrytexts = findViewById(R.id.entrytexts);
 
@@ -132,7 +132,7 @@ public class PedidoActivity extends ListActivity implements android.view.View.On
                 //}
 
 
-                setListAdapter(adapter);
+                //setListAdapter(adapter);
             } else {
                 Toast.makeText(this, "Sem Pedidos!", Toast.LENGTH_SHORT).show();
             }

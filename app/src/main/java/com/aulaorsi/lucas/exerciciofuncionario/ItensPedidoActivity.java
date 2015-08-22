@@ -8,8 +8,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aulaorsi.lucas.exerciciofuncionario.R;
@@ -22,13 +28,14 @@ public class ItensPedidoActivity extends Activity implements android.view.View.O
     EditText edIdPedido;
     EditText edProduto;
 
+    TextView itenspedido_Id;
+
     Button btnSave;
     Button btnClose;
     Button btnDelete;
 
     private int _Itens_Pedido_Id=0;
     private int _Pedido_Id=0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +60,6 @@ public class ItensPedidoActivity extends Activity implements android.view.View.O
         //ItensPedidoRepo repo = new ItensPedidoRepo(this);
         //ItensPedido itenspedido = new ItensPedido();
         //itenspedido = repo.getItemPedidoById(_Itens_Pedido_Id);
-
-
-
-
 
         _Pedido_Id = 0;
         Intent intent = getIntent();
@@ -98,14 +101,64 @@ public class ItensPedidoActivity extends Activity implements android.view.View.O
             itenspedido.setProduto(edProduto.getText().toString());
             itenspedido.setId(_Itens_Pedido_Id);
 
-            if (_Itens_Pedido_Id==0){
-                _Itens_Pedido_Id = repo.insert(itenspedido);
+            //if (_Itens_Pedido_Id==0){
+            _Itens_Pedido_Id = repo.insert(itenspedido);
+            edProduto.setText("");
+            Toast.makeText(this, "Novo Item inserido", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(this, "Novo pedido inserido", Toast.LENGTH_SHORT).show();
-            }//else{
+            /*ItensPedidoRepo repoit = new ItensPedidoRepo(this);
 
-                //repo.update(pedido);
-                //Toast.makeText(this,"Pedido atualizado",Toast.LENGTH_SHORT).show();
+            ArrayList<HashMap<String, String>> itenspedidoList = repoit.findItemPedidoById(Integer.parseInt(edIdPedido.getText().toString()));
+            if (itenspedidoList.size() != 0) {
+                //ListView lv = getListView();
+                ListView lv = (ListView) findViewById(R.id.ListItens);
+
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        itenspedido_Id = (TextView) view.findViewById(R.id.itenspedido_Id);
+                        String itenspedidoId = itenspedido_Id.getText().toString();
+                        Intent objIndent = new Intent(getApplicationContext(), PedidoDetalhe.class);
+                        objIndent.putExtra("itenspedido_Id", Integer.parseInt(itenspedidoId));
+                        startActivity(objIndent);
+                    }
+                });
+                ListAdapter adapter = new SimpleAdapter(ItensPedidoActivity.this, itenspedidoList, R.layout.view_itempedido_entry, new String[]{"id", "produto"}, new int[]{R.id.itenspedido_Id, R.id.itenspedido_produto});
+                lv.setAdapter(adapter);
+                //setListAdapter(adapter);*/
+
+
+                ItensPedidoRepo repoit = new ItensPedidoRepo(this);
+
+                ArrayList<HashMap<String, String>> itenspedidoList = repoit.getItemPedidoList(Integer.parseInt(edIdPedido.getText().toString()));
+                if (itenspedidoList.size() != 0) {
+                    //ListView lv = getListView(); para usar esse método voce tem que herdar de ListActivity
+                    ListView lv = (ListView) findViewById(R.id.ListItens);
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            itenspedido_Id = (TextView) view.findViewById(R.id.itenspedido_Id);
+                            String itenspedidoId = itenspedido_Id.getText().toString();
+                            Intent objIndent = new Intent(getApplicationContext(), PedidoDetalhe.class);
+                            objIndent.putExtra("itenspedido_Id", Integer.parseInt(itenspedidoId));
+                            startActivity(objIndent);
+                        }
+                    });
+                    ListAdapter adapter = new SimpleAdapter(ItensPedidoActivity.this, itenspedidoList, R.layout.view_itempedido_entry, new String[]{"id", "produto"}, new int[]{R.id.itenspedido_Id, R.id.itenspedido_produto});
+                    lv.setAdapter(adapter);
+                    //setListAdapter(adapter); para usar esse método voce tem que herdar de ListActivity
+
+
+            } else {
+                Toast.makeText(this, "Nenhum item encontrado!", Toast.LENGTH_SHORT).show();
+            }
+
+
+
+            //}else{
+
+            //    repo.update(itenspedido);
+            //    Toast.makeText(this,"Pedido atualizado",Toast.LENGTH_SHORT).show();
             //}
         }else if (view== findViewById(R.id.btnDelete)){
             ItensPedidoRepo repo = new ItensPedidoRepo(this);
@@ -117,4 +170,7 @@ public class ItensPedidoActivity extends Activity implements android.view.View.O
         }
 
     }
+
+
+
 }

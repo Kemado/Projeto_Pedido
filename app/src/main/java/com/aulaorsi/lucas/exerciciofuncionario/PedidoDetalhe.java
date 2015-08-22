@@ -104,7 +104,6 @@ public class PedidoDetalhe extends ActionBarActivity implements android.view.Vie
 
                 Intent intent = new Intent(this, ItensPedidoActivity.class);
                 intent.putExtra("_Pedido_Id", _Pedido_Id);
-                //intent.putExtra("itens_pedido_Id", 0);
                 startActivity(intent);
 
 
