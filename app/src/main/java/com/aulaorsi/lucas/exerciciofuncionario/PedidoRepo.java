@@ -24,7 +24,7 @@ public class PedidoRepo {
         ContentValues values = new ContentValues();
         values.put(Pedido.COLUNA_MESA,aluno.getMesa());
         values.put(Pedido.COLUNA_GARCOM,aluno.getGarcom());
-        values.put(Pedido.COLUNA_STATUS,aluno.getStatus());
+        values.put(Pedido.COLUNA_STATUS, aluno.getStatus());
         return values;
     }
 
@@ -40,7 +40,7 @@ public class PedidoRepo {
 
     public void update(Pedido pedido) {
         SQLiteDatabase db = dbHelper.getWritableDatabase(); ContentValues values = preencherDados(pedido);
-        db.update(dbHelper.TABELA_PEDIDO, values, Pedido.COLUNA_ID + "= ?", new String[] { String.valueOf(pedido.getId()) });
+        db.update(dbHelper.TABELA_PEDIDO, values, Pedido.COLUNA_ID + "= ?", new String[]{String.valueOf(pedido.getId())});
         db.close();
     }
 
@@ -123,4 +123,32 @@ public class PedidoRepo {
 
         return pedido;
     }
+
+    public Garcom getGarcomById(int Id) {
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " +
+                Garcom.COLUNA_ID + "," + Garcom.COLUNA_NOME +
+                " FROM " + dbHelper.TABELA_GARCOM + " WHERE " +
+                Pedido.COLUNA_ID + "=?";
+
+        int iCount =0;
+        Garcom garcom = new Garcom();
+        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(Id) } );
+
+        if (cursor.moveToFirst()) {
+            do {
+                garcom.setId(cursor.getInt(cursor.getColumnIndex(Garcom.COLUNA_ID)));
+                garcom.setNome(cursor.getString(cursor.getColumnIndex(Garcom.COLUNA_NOME)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return garcom;
+    }
+
+
+
+
 }

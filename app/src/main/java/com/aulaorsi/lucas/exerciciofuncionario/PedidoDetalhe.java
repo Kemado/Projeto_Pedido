@@ -6,9 +6,17 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by lucas on 5/30/15.
@@ -24,7 +32,7 @@ public class PedidoDetalhe extends ActionBarActivity implements android.view.Vie
     EditText editTextId;
     private int _Pedido_Id=0;
     private int _Itens_Pedido_Id=0;
-
+    private int _idGarcom=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +63,13 @@ public class PedidoDetalhe extends ActionBarActivity implements android.view.Vie
         pedido = repo.getPedidoById(_Pedido_Id);
 
         editTextMesa.setText(String.valueOf(pedido.getMesa()));
-        editTextGarcom.setText(pedido.getGarcom());
+        //editTextGarcom.setText(pedido.getGarcom());
         editTextStatus.setText(String.valueOf(pedido.getStatus()));
-        //editTextId.setText(String.valueOf(pedido.getId()));
+
+        Garcom garcom = new Garcom();
+        garcom = repo.getGarcomById(_idGarcom);
+        editTextGarcom.setText(garcom.getNome());
+
     }
 
     @Override

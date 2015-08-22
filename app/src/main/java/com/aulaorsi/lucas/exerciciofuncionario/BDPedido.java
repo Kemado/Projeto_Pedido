@@ -11,7 +11,7 @@ import android.util.Log;
 public class BDPedido extends SQLiteOpenHelper {
 
     private static final String NOME_BANCO = "bancoexemplo";
-    private static final int VERSAO_BANCO = 9;
+    private static final int VERSAO_BANCO = 10;
     public static final String TABELA_PEDIDO = "pedido";
     public static final String TABELA_CREATE =
             "create table " + TABELA_PEDIDO + " ( " + " _id INTEGER primary key autoincrement, " +
@@ -20,9 +20,8 @@ public class BDPedido extends SQLiteOpenHelper {
                     " status INTEGER );";
 
     public static final String TABELA_GARCOM = "tabelagarcom";
-
     public static final String TABELA_CREATE_GARCOM =
-            "create table " + TABELA_GARCOM + " ( " + " _idgarcom INTEGER primary key autoincrement, " +
+            "create table " + TABELA_GARCOM + " ( " + " _id INTEGER primary key autoincrement, " +
                     " nome varchar(50) );";
 
     public static final String TABELA_ITENSPEDIDO = "itenspedido";
